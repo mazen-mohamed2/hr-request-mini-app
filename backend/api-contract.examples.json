@@ -1,0 +1,341 @@
+{
+  "notes": [
+    "Captured from the compiled backend using isolated test databases.",
+    "JWT is redacted; all other IDs, dates, fields and values are actual API responses."
+  ],
+  "responses": {
+    "POST /api/auth/login": {
+      "status": 200,
+      "body": {
+        "token": "<redacted JWT>",
+        "tokenType": "Bearer",
+        "expiresIn": 3600,
+        "user": {
+          "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "employeeId": "EMP001",
+          "name": "Alice Employee",
+          "email": "alice@example.com",
+          "department": "Engineering",
+          "jobTitle": "Software Engineer",
+          "role": "EMPLOYEE",
+          "createdAt": "2026-10-14T09:03:59.371Z",
+          "updatedAt": "2026-10-14T09:03:59.371Z"
+        }
+      }
+    },
+    "GET /api/me": {
+      "status": 200,
+      "body": {
+        "data": {
+          "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "employeeId": "EMP001",
+          "name": "Alice Employee",
+          "email": "alice@example.com",
+          "department": "Engineering",
+          "jobTitle": "Software Engineer",
+          "role": "EMPLOYEE",
+          "createdAt": "2026-10-14T09:03:59.371Z",
+          "updatedAt": "2026-10-14T09:03:59.371Z"
+        }
+      }
+    },
+    "ERROR 401 missing token": {
+      "status": 401,
+      "body": {
+        "error": {
+          "code": "UNAUTHORIZED",
+          "message": "Bearer authentication is required."
+        }
+      }
+    },
+    "POST /api/requests": {
+      "status": 201,
+      "body": {
+        "data": {
+          "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+          "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "type": "EMPLOYMENT_LETTER",
+          "subject": "Employment confirmation",
+          "description": "Please issue my employment letter.",
+          "status": "PENDING",
+          "hrComment": null,
+          "reviewedBy": null,
+          "submittedAt": "2026-10-14T09:04:55.547Z",
+          "reviewedAt": null,
+          "createdAt": "2026-10-14T09:04:55.547Z",
+          "updatedAt": "2026-10-14T09:04:55.547Z",
+          "employee": {
+            "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "employeeId": "EMP001",
+            "name": "Alice Employee",
+            "email": "alice@example.com",
+            "department": "Engineering",
+            "jobTitle": "Software Engineer",
+            "role": "EMPLOYEE",
+            "createdAt": "2026-10-14T09:03:59.371Z",
+            "updatedAt": "2026-10-14T09:03:59.371Z"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    "GET /api/requests": {
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+            "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "type": "EMPLOYMENT_LETTER",
+            "subject": "Employment confirmation",
+            "description": "Please issue my employment letter.",
+            "status": "PENDING",
+            "hrComment": null,
+            "reviewedBy": null,
+            "submittedAt": "2026-10-14T09:04:55.547Z",
+            "reviewedAt": null,
+            "createdAt": "2026-10-14T09:04:55.547Z",
+            "updatedAt": "2026-10-14T09:04:55.547Z",
+            "employee": {
+              "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+              "employeeId": "EMP001",
+              "name": "Alice Employee",
+              "email": "alice@example.com",
+              "department": "Engineering",
+              "jobTitle": "Software Engineer",
+              "role": "EMPLOYEE",
+              "createdAt": "2026-10-14T09:03:59.371Z",
+              "updatedAt": "2026-10-14T09:03:59.371Z"
+            },
+            "reviewer": null
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "pageSize": 20,
+          "total": 1,
+          "totalPages": 1
+        }
+      }
+    },
+    "GET /api/requests/:id": {
+      "status": 200,
+      "body": {
+        "data": {
+          "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+          "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "type": "EMPLOYMENT_LETTER",
+          "subject": "Employment confirmation",
+          "description": "Please issue my employment letter.",
+          "status": "PENDING",
+          "hrComment": null,
+          "reviewedBy": null,
+          "submittedAt": "2026-10-14T09:04:55.547Z",
+          "reviewedAt": null,
+          "createdAt": "2026-10-14T09:04:55.547Z",
+          "updatedAt": "2026-10-14T09:04:55.547Z",
+          "employee": {
+            "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "employeeId": "EMP001",
+            "name": "Alice Employee",
+            "email": "alice@example.com",
+            "department": "Engineering",
+            "jobTitle": "Software Engineer",
+            "role": "EMPLOYEE",
+            "createdAt": "2026-10-14T09:03:59.371Z",
+            "updatedAt": "2026-10-14T09:03:59.371Z"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    "ERROR 404 private request": {
+      "status": 404,
+      "body": {
+        "error": {
+          "code": "REQUEST_NOT_FOUND",
+          "message": "Request not found."
+        }
+      }
+    },
+    "ERROR 403 employee on HR route": {
+      "status": 403,
+      "body": {
+        "error": {
+          "code": "FORBIDDEN",
+          "message": "You do not have permission to perform this action."
+        }
+      }
+    },
+    "GET /api/hr/requests?status=PENDING": {
+      "status": 200,
+      "body": {
+        "data": [
+          {
+            "id": "da11a899-8ffd-44b8-8e1d-e4677725a0bd",
+            "employeeId": "e73af6e8-64cc-4557-b88d-6f24d675b39f",
+            "type": "OTHER",
+            "subject": "Employment confirmation",
+            "description": "Please issue my employment letter.",
+            "status": "PENDING",
+            "hrComment": null,
+            "reviewedBy": null,
+            "submittedAt": "2026-10-14T09:04:55.571Z",
+            "reviewedAt": null,
+            "createdAt": "2026-10-14T09:04:55.571Z",
+            "updatedAt": "2026-10-14T09:04:55.571Z",
+            "employee": {
+              "id": "e73af6e8-64cc-4557-b88d-6f24d675b39f",
+              "employeeId": "EMP002",
+              "name": "Bob Employee",
+              "email": "bob@example.com",
+              "department": "Finance",
+              "jobTitle": "Accountant",
+              "role": "EMPLOYEE",
+              "createdAt": "2026-10-14T09:03:59.396Z",
+              "updatedAt": "2026-10-14T09:03:59.396Z"
+            },
+            "reviewer": null
+          },
+          {
+            "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+            "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "type": "EMPLOYMENT_LETTER",
+            "subject": "Employment confirmation",
+            "description": "Please issue my employment letter.",
+            "status": "PENDING",
+            "hrComment": null,
+            "reviewedBy": null,
+            "submittedAt": "2026-10-14T09:04:55.547Z",
+            "reviewedAt": null,
+            "createdAt": "2026-10-14T09:04:55.547Z",
+            "updatedAt": "2026-10-14T09:04:55.547Z",
+            "employee": {
+              "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+              "employeeId": "EMP001",
+              "name": "Alice Employee",
+              "email": "alice@example.com",
+              "department": "Engineering",
+              "jobTitle": "Software Engineer",
+              "role": "EMPLOYEE",
+              "createdAt": "2026-10-14T09:03:59.371Z",
+              "updatedAt": "2026-10-14T09:03:59.371Z"
+            },
+            "reviewer": null
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "pageSize": 20,
+          "total": 2,
+          "totalPages": 1
+        }
+      }
+    },
+    "GET /api/hr/requests/:id": {
+      "status": 200,
+      "body": {
+        "data": {
+          "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+          "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "type": "EMPLOYMENT_LETTER",
+          "subject": "Employment confirmation",
+          "description": "Please issue my employment letter.",
+          "status": "PENDING",
+          "hrComment": null,
+          "reviewedBy": null,
+          "submittedAt": "2026-10-14T09:04:55.547Z",
+          "reviewedAt": null,
+          "createdAt": "2026-10-14T09:04:55.547Z",
+          "updatedAt": "2026-10-14T09:04:55.547Z",
+          "employee": {
+            "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "employeeId": "EMP001",
+            "name": "Alice Employee",
+            "email": "alice@example.com",
+            "department": "Engineering",
+            "jobTitle": "Software Engineer",
+            "role": "EMPLOYEE",
+            "createdAt": "2026-10-14T09:03:59.371Z",
+            "updatedAt": "2026-10-14T09:03:59.371Z"
+          },
+          "reviewer": null
+        }
+      }
+    },
+    "PATCH /api/hr/requests/:id/review": {
+      "status": 200,
+      "body": {
+        "data": {
+          "id": "4e78ed98-12a1-4a86-b575-0ed8f1124fbd",
+          "employeeId": "609b54c7-824a-4fae-81b3-0d89ab291453",
+          "type": "EMPLOYMENT_LETTER",
+          "subject": "Employment confirmation",
+          "description": "Please issue my employment letter.",
+          "status": "APPROVED",
+          "hrComment": "Letter will be prepared.",
+          "reviewedBy": "0117e3f4-2d4c-4277-8a9b-edb2e7034527",
+          "submittedAt": "2026-10-14T09:04:55.547Z",
+          "reviewedAt": "2026-10-14T09:04:55.905Z",
+          "createdAt": "2026-10-14T09:04:55.547Z",
+          "updatedAt": "2026-10-14T09:04:55.907Z",
+          "employee": {
+            "id": "609b54c7-824a-4fae-81b3-0d89ab291453",
+            "employeeId": "EMP001",
+            "name": "Alice Employee",
+            "email": "alice@example.com",
+            "department": "Engineering",
+            "jobTitle": "Software Engineer",
+            "role": "EMPLOYEE",
+            "createdAt": "2026-10-14T09:03:59.371Z",
+            "updatedAt": "2026-10-14T09:03:59.371Z"
+          },
+          "reviewer": {
+            "id": "0117e3f4-2d4c-4277-8a9b-edb2e7034527",
+            "employeeId": "HR001",
+            "name": "Hana HR",
+            "email": "hr@example.com",
+            "department": "Human Resources",
+            "jobTitle": "HR Specialist",
+            "role": "HR",
+            "createdAt": "2026-10-14T09:03:59.407Z",
+            "updatedAt": "2026-10-14T09:04:55.524Z"
+          }
+        }
+      }
+    },
+    "ERROR 409 repeated review": {
+      "status": 409,
+      "body": {
+        "error": {
+          "code": "ALREADY_REVIEWED",
+          "message": "Only pending requests may be reviewed."
+        }
+      }
+    },
+    "ERROR 400 invalid input": {
+      "status": 400,
+      "body": {
+        "error": {
+          "code": "VALIDATION_ERROR",
+          "message": "Invalid request input.",
+          "details": [
+            {
+              "path": "subject",
+              "code": "too_small"
+            }
+          ]
+        }
+      }
+    },
+    "ERROR 500 internal database failure": {
+      "status": 500,
+      "body": {
+        "error": {
+          "code": "INTERNAL_ERROR",
+          "message": "An unexpected server error occurred."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  EMPLOYEE
+  HR
+}
+
+enum RequestType {
+  EMPLOYMENT_LETTER
+  SALARY_CERTIFICATE
+  PERSONAL_INFORMATION_CHANGE
+  OTHER
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id               String      @id @default(uuid()) @db.Uuid
+  employeeId       String      @unique @db.VarChar(40)
+  name             String      @db.VarChar(120)
+  email            String      @unique @db.VarChar(254)
+  passwordHash     String      @db.VarChar(60)
+  department       String      @db.VarChar(120)
+  jobTitle         String      @db.VarChar(120)
+  role             Role        @default(EMPLOYEE)
+  createdAt        DateTime    @default(now()) @db.Timestamptz(3)
+  updatedAt        DateTime    @updatedAt @db.Timestamptz(3)
+  requests         HRRequest[] @relation("EmployeeRequests")
+  reviewedRequests HRRequest[] @relation("ReviewedRequests")
+}
+
+model HRRequest {
+  id          String        @id @default(uuid()) @db.Uuid
+  // References the user's internal UUID; User.employeeId is the business identifier.
+  employeeId  String        @db.Uuid
+  employee    User          @relation("EmployeeRequests", fields: [employeeId], references: [id], onDelete: Restrict)
+  type        RequestType
+  subject     String        @db.VarChar(160)
+  description String        @db.VarChar(5000)
+  status      RequestStatus @default(PENDING)
+  hrComment   String?       @db.VarChar(2000)
+  reviewedBy  String?       @db.Uuid
+  reviewer    User?         @relation("ReviewedRequests", fields: [reviewedBy], references: [id], onDelete: Restrict)
+  submittedAt DateTime      @default(now()) @db.Timestamptz(3)
+  reviewedAt  DateTime?     @db.Timestamptz(3)
+  createdAt   DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt   DateTime      @updatedAt @db.Timestamptz(3)
+
+  @@index([employeeId, submittedAt(sort: Desc), id(sort: Desc)])
+  @@index([status, submittedAt(sort: Desc), id(sort: Desc)])
+  @@index([submittedAt(sort: Desc), id(sort: Desc)])
+}

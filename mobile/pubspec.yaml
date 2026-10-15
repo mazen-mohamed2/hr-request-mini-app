@@ -1,0 +1,20 @@
+name: hr_request_mobile
+description: Employee HR requests and HR reviews.
+publish_to: none
+version: 1.0.0+1
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: '>=3.47.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^3.4.3
+  dio: ^5.9.2
+  go_router: ^18.0.2
+  flutter_secure_storage: ^11.2.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+flutter:
+  uses-material-design: true
